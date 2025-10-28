@@ -47,15 +47,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        cinema: {
+          red: "hsl(var(--cinema-red))",
+          gold: "hsl(var(--cinema-gold))",
+          dark: "hsl(var(--cinema-dark))",
+          card: "hsl(var(--cinema-card))",
+          border: "hsl(var(--cinema-border))",
+        },
+        seat: {
+          available: "hsl(var(--seat-available))",
+          reserved: "hsl(var(--seat-reserved))",
+          sold: "hsl(var(--seat-sold))",
+          vip: "hsl(var(--seat-vip))",
+          selected: "hsl(var(--seat-selected))",
         },
       },
       borderRadius: {

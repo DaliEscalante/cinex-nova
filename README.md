@@ -1,73 +1,150 @@
-# Welcome to your Lovable project
+# 🎬 CineX - Plataforma de Cine Moderna
 
-## Project info
+Plataforma completa de gestión de cine con cartelera, venta de boletos, dulcería y sistema de punto de venta.
 
-**URL**: https://lovable.dev/projects/efff5d1a-c233-4703-8bf2-654232b7e3ac
+## 🚀 Características
 
-## How can I edit this code?
+### 🔐 Autenticación Simulada
+- Login con roles: **Admin**, **Vendedor** y **Cliente**
+- Funciona con cualquier correo y contraseña
+- Datos guardados en `localStorage`
 
-There are several ways of editing your application.
+### 🎭 Cartelera
+- 8 películas de 2025 (Deadpool & Wolverine, Dune 2, Inside Out 2, etc.)
+- Vista de cartelera con imágenes y detalles
+- Sistema de funciones con horarios y salas
 
-**Use Lovable**
+### 🎟️ Sistema de Boletos
+- Selección visual de asientos (mapa 10x16)
+- Estados: disponible, reservado, vendido, VIP
+- Funciones por fecha, hora y sala
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/efff5d1a-c233-4703-8bf2-654232b7e3ac) and start prompting.
+### 🍿 Dulcería
+- 200 productos mock organizados en 5 categorías
+- Combos, snacks, bebidas, palomitas y dulces
+- Sistema de inventario y stock
 
-Changes made via Lovable will be committed automatically to this repo.
+### 💰 Punto de Venta (Vendedor)
+- Búsqueda rápida de productos
+- Carrito de compra con IVA (16%)
+- Registro de ventas
 
-**Use your preferred IDE**
+### 👑 Panel de Administrador
+- Dashboard con estadísticas
+- CRUD de películas
+- CRUD de productos
+- Reportes en PDF y Excel
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📊 Reportes
+- Exportación a PDF con logo
+- Exportación a Excel
+- Incluye: SKU, nombre, categoría, precio y stock
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🎨 Diseño
 
-Follow these steps:
+- **Tema**: Oscuro cinematográfico
+- **Colores**: Rojo (#DC143C) y dorado (#FFD700)
+- **Estilo**: Moderno, tipo Netflix/Cinépolis
+- **Responsive**: Adaptado a todos los dispositivos
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+## 📦 Tecnologías
+
+- ⚛️ React 18
+- ⚡ Vite
+- 🎨 Tailwind CSS
+- 📘 TypeScript
+- 🧩 shadcn/ui
+- 📄 jsPDF + autoTable
+- 📊 xlsx (SheetJS)
+
+## 🚦 Roles y Accesos
+
+### Cliente (`customer`)
+- Ver cartelera
+- Seleccionar asientos
+- Comprar boletos y productos
+- Carrito de compra
+
+### Vendedor (`seller`)
+- Acceso a punto de venta (POS)
+- Búsqueda y venta de productos
+- Registro de ventas con IVA
+
+### Administrador (`admin`)
+- Dashboard con estadísticas
+- Gestión de películas
+- Gestión de productos
+- Generación de reportes
+
+## 🔧 Instalación
+
+```bash
+# Clonar el repositorio
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Instalar dependencias
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Iniciar en desarrollo
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 🌐 Rutas Principales
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `/` - Cartelera (público)
+- `/login` - Inicio de sesión
+- `/showtimes/:id` - Funciones de película
+- `/seatmap/:id` - Selección de asientos
+- `/products` - Dulcería
+- `/customer/cart` - Carrito (cliente)
+- `/seller/pos` - Punto de venta (vendedor)
+- `/admin/dashboard` - Panel admin
+- `/admin/movies` - Gestión de películas
+- `/admin/products` - Gestión de productos
+- `/admin/reports` - Reportes
 
-**Use GitHub Codespaces**
+## 💾 Datos Mock
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Todos los datos se persisten en `localStorage`:
+- ✅ Usuarios y sesiones
+- ✅ 8 películas
+- ✅ 200 productos en 5 categorías
+- ✅ Funciones y horarios
+- ✅ Mapas de asientos
+- ✅ Ventas y transacciones
 
-## What technologies are used for this project?
+## 🔌 Conexión a Backend (Futuro)
 
-This project is built with:
+El proyecto está preparado para conectarse a un backend real:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Edita `src/config.ts`:
+```typescript
+export const USE_REMOTE = true;
+export const API_LARAVEL = "https://tu-api-laravel.com/api";
+export const API_NODE = "https://tu-api-node.com/api";
+```
 
-## How can I deploy this project?
+2. Los componentes ya están estructurados para migrar de `localStorage` a APIs REST.
 
-Simply open [Lovable](https://lovable.dev/projects/efff5d1a-c233-4703-8bf2-654232b7e3ac) and click on Share -> Publish.
+## 📝 Credenciales Demo
 
-## Can I connect a custom domain to my Lovable project?
+Usa **cualquier correo y contraseña**, elige tu rol:
+- `admin@cinex.com` / `cualquier_password` → **Admin**
+- `vendedor@cinex.com` / `cualquier_password` → **Vendedor**  
+- `cliente@cinex.com` / `cualquier_password` → **Cliente**
 
-Yes, you can!
+## 🎯 Próximos Pasos
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- [ ] Conectar backend Laravel/Node
+- [ ] Integración con pasarela de pagos
+- [ ] Sistema de notificaciones en tiempo real
+- [ ] App móvil con React Native
+- [ ] Sistema de puntos y membresías
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📄 Licencia
+
+Este proyecto es privado y confidencial.
+
+---
+
+Desarrollado con ❤️ usando [Lovable](https://lovable.dev)
