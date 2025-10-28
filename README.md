@@ -1,11 +1,11 @@
-# 🎬 CineX - Plataforma de Cine Moderna
+# 🌟 STARLIGHT CINEMA - Plataforma Premium de Cine
 
-Plataforma completa de gestión de cine con cartelera, venta de boletos, dulcería y sistema de punto de venta.
+Plataforma espectacular de gestión de cine con cartelera exclusiva, venta de boletos, dulcería premium y sistema administrativo completo.
 
 ## 🚀 Características
 
 ### 🔐 Autenticación Simulada
-- Login con roles: **Admin**, **Vendedor** y **Cliente**
+- Login con roles: **Administrador** y **Cliente**
 - Funciona con cualquier correo y contraseña
 - Datos guardados en `localStorage`
 
@@ -24,9 +24,9 @@ Plataforma completa de gestión de cine con cartelera, venta de boletos, dulcer�
 - Combos, snacks, bebidas, palomitas y dulces
 - Sistema de inventario y stock
 
-### 💰 Punto de Venta (Vendedor)
-- Búsqueda rápida de productos
+### 💰 Sistema de Compras
 - Carrito de compra con IVA (16%)
+- Navegación fluida entre dulcería y carrito
 - Registro de ventas
 
 ### 👑 Panel de Administrador
@@ -42,10 +42,11 @@ Plataforma completa de gestión de cine con cartelera, venta de boletos, dulcer�
 
 ## 🎨 Diseño
 
-- **Tema**: Oscuro cinematográfico
-- **Colores**: Rojo (#DC143C) y dorado (#FFD700)
-- **Estilo**: Moderno, tipo Netflix/Cinépolis
-- **Responsive**: Adaptado a todos los dispositivos
+- **Tema**: Ultra Premium Cinematográfico
+- **Colores**: Rojo vibrante (#FF1744), Púrpura (#B24BF3) y Dorado (#FFD633)
+- **Efectos**: Gradientes dinámicos, sombras resplandecientes, animaciones fluidas
+- **Estilo**: Espectacular, moderno y premium
+- **Responsive**: Perfectamente adaptado a todos los dispositivos
 
 ## 📦 Tecnologías
 
@@ -60,21 +61,17 @@ Plataforma completa de gestión de cine con cartelera, venta de boletos, dulcer�
 ## 🚦 Roles y Accesos
 
 ### Cliente (`customer`)
-- Ver cartelera
-- Seleccionar asientos
-- Comprar boletos y productos
-- Carrito de compra
-
-### Vendedor (`seller`)
-- Acceso a punto de venta (POS)
-- Búsqueda y venta de productos
-- Registro de ventas con IVA
+- Ver cartelera exclusiva
+- Seleccionar asientos en tiempo real
+- Comprar boletos y productos premium
+- Carrito de compra interactivo
+- Navegación fluida entre secciones
 
 ### Administrador (`admin`)
-- Dashboard con estadísticas
-- Gestión de películas
-- Gestión de productos
-- Generación de reportes
+- Dashboard con estadísticas en tiempo real
+- Gestión completa de películas
+- Gestión completa de productos
+- Generación de reportes en PDF y Excel
 
 ## 🔧 Instalación
 
@@ -91,13 +88,12 @@ npm run dev
 
 ## 🌐 Rutas Principales
 
-- `/` - Cartelera (público)
+- `/` - Cartelera espectacular (público)
 - `/login` - Inicio de sesión
 - `/showtimes/:id` - Funciones de película
 - `/seatmap/:id` - Selección de asientos
-- `/products` - Dulcería
+- `/products` - Dulcería premium
 - `/customer/cart` - Carrito (cliente)
-- `/seller/pos` - Punto de venta (vendedor)
 - `/admin/dashboard` - Panel admin
 - `/admin/movies` - Gestión de películas
 - `/admin/products` - Gestión de productos
@@ -129,9 +125,8 @@ export const API_NODE = "https://tu-api-node.com/api";
 ## 📝 Credenciales Demo
 
 Usa **cualquier correo y contraseña**, elige tu rol:
-- `admin@cinex.com` / `cualquier_password` → **Admin**
-- `vendedor@cinex.com` / `cualquier_password` → **Vendedor**  
-- `cliente@cinex.com` / `cualquier_password` → **Cliente**
+- `admin@starlight.com` / `cualquier_password` → **Administrador**
+- `cliente@starlight.com` / `cualquier_password` → **Cliente**
 
 ## 🎯 Próximos Pasos
 

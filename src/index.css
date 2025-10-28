@@ -8,54 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Cinematic Dark Theme - Premium Cinema Experience */
-    --background: 0 0% 7%;
+    /* Spectacular Cinematic Theme - Ultra Premium Experience */
+    --background: 0 0% 5%;
     --foreground: 0 0% 98%;
 
-    --card: 0 0% 10%;
+    --card: 240 10% 8%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 8%;
+    --popover: 240 10% 8%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 348 83% 47%;
+    --primary: 340 95% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 100% 51%;
+    --secondary: 50 100% 60%;
     --secondary-foreground: 0 0% 10%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 240 5% 15%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 348 83% 47%;
+    --accent: 280 100% 65%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 90% 62%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 18%;
-    --ring: 348 83% 47%;
+    --border: 240 10% 18%;
+    --input: 240 10% 14%;
+    --ring: 340 95% 55%;
 
-    --radius: 0.75rem;
+    --radius: 0.875rem;
 
-    /* Cinema specific colors */
-    --cinema-red: 348 83% 47%;
-    --cinema-gold: 45 100% 51%;
-    --cinema-dark: 0 0% 7%;
-    --cinema-card: 0 0% 10%;
-    --cinema-border: 0 0% 20%;
+    /* Cinema specific colors - Spectacular Edition */
+    --cinema-red: 340 95% 55%;
+    --cinema-gold: 50 100% 60%;
+    --cinema-dark: 0 0% 5%;
+    --cinema-card: 240 10% 8%;
+    --cinema-border: 240 10% 18%;
+    --cinema-purple: 280 100% 65%;
     
-    /* Seat colors */
-    --seat-available: 0 0% 35%;
-    --seat-reserved: 45 100% 51%;
-    --seat-sold: 348 83% 47%;
-    --seat-vip: 271 76% 53%;
-    --seat-selected: 199 89% 48%;
+    /* Seat colors - Enhanced */
+    --seat-available: 210 15% 40%;
+    --seat-reserved: 50 100% 60%;
+    --seat-sold: 340 95% 55%;
+    --seat-vip: 280 100% 65%;
+    --seat-selected: 199 95% 55%;
 
-    /* Gradients */
-    --gradient-cinema: linear-gradient(135deg, hsl(348 83% 47% / 0.1), hsl(45 100% 51% / 0.05));
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 7% / 0) 0%, hsl(0 0% 7%) 100%);
+    /* Spectacular Gradients */
+    --gradient-cinema: linear-gradient(135deg, hsl(340 95% 55% / 0.2), hsl(280 100% 65% / 0.1), hsl(50 100% 60% / 0.05));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 5% / 0) 0%, hsl(0 0% 5%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(240 10% 10%), hsl(240 10% 6%));
+    --glow-primary: 0 0 40px hsl(340 95% 55% / 0.5);
+    --glow-secondary: 0 0 30px hsl(50 100% 60% / 0.4);
+    --glow-accent: 0 0 35px hsl(280 100% 65% / 0.45);
   }
 }
 
@@ -67,6 +72,9 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at top, hsl(340 95% 55% / 0.03), transparent 50%),
+                radial-gradient(ellipse at bottom, hsl(280 100% 65% / 0.02), transparent 50%),
+                hsl(var(--background));
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -76,38 +84,86 @@ All colors MUST be HSL.
 
 @layer utilities {
   .text-gradient-cinema {
-    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-pulse;
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   .card-cinema {
-    @apply bg-card border border-border rounded-xl shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply relative overflow-hidden bg-gradient-to-br from-card to-card/50 border border-border/50 rounded-xl shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 hover:scale-[1.02] hover:border-primary/30;
+    backdrop-filter: blur(10px);
+  }
+
+  .card-cinema::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsla(340, 95%, 55%, 0.1), transparent);
+    transition: left 0.7s;
+  }
+
+  .card-cinema:hover::before {
+    left: 100%;
   }
 
   .btn-cinema {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-3 font-semibold transition-all duration-200 hover:scale-105;
+    @apply relative bg-gradient-to-r from-primary via-accent to-primary text-primary-foreground hover:shadow-[var(--glow-primary)] rounded-xl px-8 py-3 font-bold transition-all duration-300 hover:scale-105 overflow-hidden;
+    background-size: 200% 100%;
+    animation: gradient-slide 3s ease infinite;
+  }
+
+  @keyframes gradient-slide {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .btn-cinema::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .btn-cinema:hover::after {
+    width: 300px;
+    height: 300px;
   }
 
   .seat {
-    @apply w-8 h-8 rounded-t-lg transition-all duration-200 cursor-pointer hover:scale-110;
+    @apply w-8 h-8 rounded-t-lg transition-all duration-300 cursor-pointer hover:scale-125 hover:shadow-lg;
   }
 
   .seat-available {
-    @apply bg-[hsl(var(--seat-available))] hover:bg-[hsl(var(--seat-available))]/80;
+    @apply bg-[hsl(var(--seat-available))] hover:bg-[hsl(var(--seat-available))]/90 hover:shadow-[0_0_15px_hsl(var(--seat-available))];
   }
 
   .seat-reserved {
-    @apply bg-[hsl(var(--seat-reserved))] cursor-not-allowed opacity-70;
+    @apply bg-[hsl(var(--seat-reserved))] cursor-not-allowed opacity-60 shadow-[0_0_10px_hsl(var(--seat-reserved)/0.3)];
   }
 
   .seat-sold {
-    @apply bg-[hsl(var(--seat-sold))] cursor-not-allowed opacity-70;
+    @apply bg-[hsl(var(--seat-sold))] cursor-not-allowed opacity-60 shadow-[0_0_10px_hsl(var(--seat-sold)/0.3)];
   }
 
   .seat-vip {
-    @apply bg-[hsl(var(--seat-vip))] hover:bg-[hsl(var(--seat-vip))]/80;
+    @apply bg-[hsl(var(--seat-vip))] hover:bg-[hsl(var(--seat-vip))]/90 hover:shadow-[0_0_20px_hsl(var(--seat-vip))];
   }
 
   .seat-selected {
-    @apply bg-[hsl(var(--seat-selected))] ring-2 ring-[hsl(var(--seat-selected))];
+    @apply bg-[hsl(var(--seat-selected))] ring-2 ring-[hsl(var(--seat-selected))] shadow-[0_0_25px_hsl(var(--seat-selected))];
   }
 }

@@ -23,9 +23,6 @@ const Login = () => {
         case "admin":
           navigate("/admin/dashboard");
           break;
-        case "seller":
-          navigate("/seller/pos");
-          break;
         case "customer":
           navigate("/");
           break;
@@ -54,7 +51,7 @@ const Login = () => {
               <Film className="w-12 h-12 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-3xl text-gradient-cinema">CineX</CardTitle>
+          <CardTitle className="text-3xl text-gradient-cinema">STARLIGHT CINEMA</CardTitle>
           <CardDescription>Ingresa tus credenciales para continuar</CardDescription>
         </CardHeader>
         <CardContent>
@@ -91,7 +88,6 @@ const Login = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="customer">Cliente</SelectItem>
-                  <SelectItem value="seller">Vendedor</SelectItem>
                   <SelectItem value="admin">Administrador</SelectItem>
                 </SelectContent>
               </Select>

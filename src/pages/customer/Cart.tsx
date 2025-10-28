@@ -45,7 +45,7 @@ const Cart = () => {
 
     const sale = {
       id: `sale_${Date.now()}`,
-      sellerEmail: user?.email || "customer@cinex.com",
+      sellerEmail: user?.email || "customer@starlight.com",
       items: cart,
       subtotal,
       tax,
@@ -66,7 +66,13 @@ const Cart = () => {
       
       <main className="pt-24 pb-12 px-4">
         <div className="container mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold mb-8 text-gradient-cinema">Mi Carrito</h1>
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-4xl font-bold text-gradient-cinema">Mi Carrito</h1>
+            <Button onClick={() => navigate("/products")} variant="outline" className="gap-2">
+              <ShoppingBag className="w-4 h-4" />
+              Seguir comprando
+            </Button>
+          </div>
 
           {cart.length === 0 ? (
             <Card className="card-cinema">

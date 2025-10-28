@@ -23,7 +23,6 @@ const Navbar = () => {
   const getRoleLabel = (role: string) => {
     switch (role) {
       case "admin": return "Administrador";
-      case "seller": return "Vendedor";
       case "customer": return "Cliente";
       default: return role;
     }
@@ -34,7 +33,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2 group">
           <Film className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
-          <span className="text-2xl font-bold text-gradient-cinema">CineX</span>
+          <span className="text-2xl font-bold text-gradient-cinema">STARLIGHT</span>
         </Link>
 
         <div className="flex items-center space-x-4">

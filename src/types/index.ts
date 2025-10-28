@@ -1,4 +1,4 @@
-export type UserRole = "admin" | "seller" | "customer";
+export type UserRole = "admin" | "customer";
 
 export interface User {
   token: string;
