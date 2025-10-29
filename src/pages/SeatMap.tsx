@@ -42,9 +42,10 @@ const SeatMap = () => {
     const seat = seats.find(s => s.row === row && s.number === number);
     if (!seat || seat.status === "sold" || seat.status === "reserved") return;
 
-    // Si es sala VIP only, solo permitir seleccionar asientos VIP
+    // Si la función NO es VIP only pero el asiento es VIP, permitir seleccionarlo
+    // Si la función ES VIP only, SOLO permitir asientos VIP
     if (vipOnly && seat.status !== "vip") {
-      toast.error("Solo puedes seleccionar asientos VIP en esta función");
+      toast.error("⚠️ Esta es una función VIP exclusiva. Solo puedes seleccionar asientos VIP (filas I y J)");
       return;
     }
 
@@ -104,10 +105,10 @@ const SeatMap = () => {
                   {room.name} - {showtime.date} {showtime.time} - ${showtime.price}
                 </p>
                 {vipOnly && (
-                  <Alert className="mt-4 max-w-2xl mx-auto border-accent">
+                  <Alert className="mt-4 max-w-2xl mx-auto border-accent bg-accent/10">
                     <AlertCircle className="h-4 w-4 text-accent" />
-                    <AlertDescription className="text-accent">
-                      Esta es una función VIP. Solo puedes seleccionar asientos VIP (color morado).
+                    <AlertDescription className="text-accent font-semibold">
+                      ⭐ FUNCIÓN VIP EXCLUSIVA - Solo puedes seleccionar asientos VIP (filas I y J - color morado)
                     </AlertDescription>
                   </Alert>
                 )}
@@ -143,13 +144,14 @@ const SeatMap = () => {
                     <p className="text-center text-sm text-muted-foreground">PANTALLA</p>
                   </div>
 
-                  <div className="space-y-3">
-                    {rows.map(row => (
-                      <div key={row} className="flex items-center justify-center gap-2">
-                        <span className="w-8 text-center font-semibold text-muted-foreground">
-                          {row}
-                        </span>
-                        {[...Array(16)].map((_, idx) => {
+                  <div className="overflow-x-auto">
+                    <div className="space-y-3 min-w-max px-4">
+                      {rows.map(row => (
+                        <div key={row} className="flex items-center justify-center gap-2">
+                          <span className="w-8 text-center font-bold text-lg text-gradient-cinema sticky left-0 bg-background/80 backdrop-blur-sm z-10 py-2">
+                            {row}
+                          </span>
+                          {[...Array(16)].map((_, idx) => {
                           const number = idx + 1;
                           const seat = seats.find(s => s.row === row && s.number === number);
                           const seatId = `${row}${number}`;
@@ -169,9 +171,10 @@ const SeatMap = () => {
                               onClick={() => toggleSeat(row, number)}
                             />
                           );
-                        })}
-                      </div>
-                    ))}
+                          })}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </CardContent>
               </Card>

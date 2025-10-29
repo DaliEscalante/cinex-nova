@@ -16,8 +16,21 @@ const STORAGE_KEYS = {
 
 // Initialize storage with mock data
 export const initializeStorage = () => {
-  if (!localStorage.getItem(STORAGE_KEYS.MOVIES)) {
+  // Always update movies to ensure format field exists
+  const existingMovies = localStorage.getItem(STORAGE_KEYS.MOVIES);
+  if (!existingMovies) {
     localStorage.setItem(STORAGE_KEYS.MOVIES, JSON.stringify(moviesData));
+  } else {
+    // Update existing movies to ensure format field
+    const movies = JSON.parse(existingMovies);
+    const updatedMovies = movies.map((movie: Movie) => {
+      const sourceMovie = moviesData.find(m => m.id === movie.id);
+      return {
+        ...movie,
+        format: movie.format || sourceMovie?.format || "2D"
+      };
+    });
+    localStorage.setItem(STORAGE_KEYS.MOVIES, JSON.stringify(updatedMovies));
   }
 
   if (!localStorage.getItem(STORAGE_KEYS.PRODUCTS)) {
