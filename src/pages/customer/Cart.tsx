@@ -8,9 +8,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Trash2, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
+import Ticket from "@/components/Ticket";
 
 const Cart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [showTicket, setShowTicket] = useState(false);
+  const [lastSale, setLastSale] = useState<any>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -44,7 +47,7 @@ const Cart = () => {
     }
 
     const sale = {
-      id: `sale_${Date.now()}`,
+      id: `STAR-${Date.now()}`,
       sellerEmail: user?.email || "customer@starlight.com",
       items: cart,
       subtotal,
@@ -54,15 +57,30 @@ const Cart = () => {
     };
 
     saveSale(sale);
+    setLastSale(sale);
     clearCart();
     setCart([]);
+    setShowTicket(true);
     toast.success("¡Compra realizada con éxito!");
-    navigate("/");
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      
+      {showTicket && lastSale && (
+        <Ticket
+          items={lastSale.items}
+          subtotal={lastSale.subtotal}
+          tax={lastSale.tax}
+          total={lastSale.total}
+          saleId={lastSale.id}
+          onClose={() => {
+            setShowTicket(false);
+            navigate("/");
+          }}
+        />
+      )}
       
       <main className="pt-24 pb-12 px-4">
         <div className="container mx-auto max-w-4xl">

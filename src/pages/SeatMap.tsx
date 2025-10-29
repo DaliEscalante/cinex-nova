@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Showtime, Seat, Movie, Room } from "@/types";
 import { getShowtimes, getSeats, saveSeats, getMovies, getRooms, getCart, saveCart } from "@/utils/storage";
 import { Button } from "@/components/ui/button";
@@ -7,15 +7,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const SeatMap = () => {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [showtime, setShowtime] = useState<Showtime | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const [seats, setSeats] = useState<Seat[]>([]);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const vipOnly = searchParams.get("vipOnly") === "true";
 
   useEffect(() => {
     const showtimeId = parseInt(id || "0");
@@ -37,6 +41,12 @@ const SeatMap = () => {
   const toggleSeat = (row: string, number: number) => {
     const seat = seats.find(s => s.row === row && s.number === number);
     if (!seat || seat.status === "sold" || seat.status === "reserved") return;
+
+    // Si es sala VIP only, solo permitir seleccionar asientos VIP
+    if (vipOnly && seat.status !== "vip") {
+      toast.error("Solo puedes seleccionar asientos VIP en esta función");
+      return;
+    }
 
     const seatId = `${row}${number}`;
     setSelectedSeats(prev =>
@@ -93,6 +103,14 @@ const SeatMap = () => {
                 <p className="text-muted-foreground">
                   {room.name} - {showtime.date} {showtime.time} - ${showtime.price}
                 </p>
+                {vipOnly && (
+                  <Alert className="mt-4 max-w-2xl mx-auto border-accent">
+                    <AlertCircle className="h-4 w-4 text-accent" />
+                    <AlertDescription className="text-accent">
+                      Esta es una función VIP. Solo puedes seleccionar asientos VIP (color morado).
+                    </AlertDescription>
+                  </Alert>
+                )}
               </div>
 
               <Card className="card-cinema mb-6">

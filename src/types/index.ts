@@ -15,6 +15,7 @@ export interface Movie {
   genre: string;
   image: string;
   description: string;
+  format: "2D" | "3D";
 }
 
 export interface Room {
@@ -31,6 +32,7 @@ export interface Showtime {
   date: string;
   time: string;
   price: number;
+  isVipOnly?: boolean;
 }
 
 export interface Category {

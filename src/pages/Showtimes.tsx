@@ -115,8 +115,13 @@ const Showtimes = () => {
                                 </div>
                               </div>
 
+                              {room?.type === "vip" && (
+                                <Badge variant="secondary" className="mr-2">
+                                  Solo VIP
+                                </Badge>
+                              )}
                               <Button
-                                onClick={() => navigate(`/seatmap/${showtime.id}`)}
+                                onClick={() => navigate(`/seatmap/${showtime.id}${room?.type === "vip" ? "?vipOnly=true" : ""}`)}
                                 className="btn-cinema"
                               >
                                 Elegir asiento
