@@ -8,59 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Professional Cinematic Theme - Elegant & Refined */
-    --background: 0 0% 8%;
-    --foreground: 0 0% 96%;
+    /* Professional Light Theme - Clean & Modern Cinema */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
 
-    --card: 220 15% 12%;
-    --card-foreground: 0 0% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
 
-    --popover: 220 15% 12%;
-    --popover-foreground: 0 0% 96%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
 
-    --primary: 210 70% 50%;
+    --primary: 210 100% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 85% 55%;
+    --secondary: 45 100% 50%;
     --secondary-foreground: 0 0% 10%;
 
-    --muted: 220 10% 20%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 210 15% 95%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 270 60% 55%;
+    --accent: 270 70% 50%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 75% 55%;
+    --destructive: 0 75% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 16%;
-    --ring: 210 70% 50%;
+    --border: 210 15% 88%;
+    --input: 210 15% 92%;
+    --ring: 210 100% 45%;
 
     --radius: 0.75rem;
 
-    /* Cinema specific colors - Professional Edition */
-    --cinema-red: 0 75% 55%;
-    --cinema-gold: 45 85% 55%;
-    --cinema-dark: 0 0% 8%;
-    --cinema-card: 220 15% 12%;
-    --cinema-border: 220 15% 20%;
-    --cinema-purple: 270 60% 55%;
+    /* Cinema specific colors - Professional Light Edition */
+    --cinema-red: 0 75% 50%;
+    --cinema-gold: 45 100% 50%;
+    --cinema-light: 0 0% 98%;
+    --cinema-card: 0 0% 100%;
+    --cinema-border: 210 15% 88%;
+    --cinema-purple: 270 70% 50%;
     
-    /* Seat colors - Professional & Subtle */
-    --seat-available: 210 20% 35%;
-    --seat-reserved: 45 70% 50%;
-    --seat-sold: 0 60% 50%;
-    --seat-vip: 270 50% 50%;
-    --seat-selected: 210 80% 55%;
+    /* Seat colors - Professional Light Theme */
+    --seat-available: 210 30% 50%;
+    --seat-reserved: 45 95% 45%;
+    --seat-sold: 0 70% 50%;
+    --seat-vip: 270 65% 50%;
+    --seat-selected: 210 100% 50%;
 
-    /* Professional Gradients */
-    --gradient-cinema: linear-gradient(135deg, hsl(210 70% 50% / 0.12), hsl(270 60% 55% / 0.08), hsl(45 85% 55% / 0.04));
-    --gradient-hero: linear-gradient(180deg, hsl(0 0% 8% / 0) 0%, hsl(0 0% 8%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(220 15% 14%), hsl(220 15% 10%));
-    --glow-primary: 0 0 25px hsl(210 70% 50% / 0.25);
-    --glow-secondary: 0 0 20px hsl(45 85% 55% / 0.2);
-    --glow-accent: 0 0 22px hsl(270 60% 55% / 0.22);
+    /* Professional Light Gradients */
+    --gradient-cinema: linear-gradient(135deg, hsl(210 100% 45% / 0.08), hsl(270 70% 50% / 0.05), hsl(45 100% 50% / 0.03));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 98% / 0) 0%, hsl(0 0% 98%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 15% 98%));
+    --glow-primary: 0 0 20px hsl(210 100% 45% / 0.15);
+    --glow-secondary: 0 0 18px hsl(45 100% 50% / 0.12);
+    --glow-accent: 0 0 20px hsl(270 70% 50% / 0.15);
   }
 }
 
@@ -72,8 +72,8 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: radial-gradient(ellipse at top, hsl(340 95% 55% / 0.03), transparent 50%),
-                radial-gradient(ellipse at bottom, hsl(280 100% 65% / 0.02), transparent 50%),
+    background: radial-gradient(ellipse at top, hsl(210 100% 45% / 0.03), transparent 60%),
+                radial-gradient(ellipse at bottom, hsl(270 70% 50% / 0.02), transparent 60%),
                 hsl(var(--background));
   }
 
@@ -95,8 +95,7 @@ All colors MUST be HSL.
   }
 
   .card-cinema {
-    @apply relative overflow-hidden bg-gradient-to-br from-card to-card/80 border border-border/60 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01] hover:border-primary/40;
-    backdrop-filter: blur(8px);
+    @apply relative overflow-hidden bg-card border border-border rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.01] hover:border-primary/50;
   }
 
   .card-cinema::before {
@@ -106,7 +105,7 @@ All colors MUST be HSL.
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, hsla(210, 70%, 50%, 0.06), transparent);
+    background: linear-gradient(90deg, transparent, hsla(210, 100%, 45%, 0.05), transparent);
     transition: left 0.6s;
   }
 
@@ -143,22 +142,22 @@ All colors MUST be HSL.
 
   .seat {
     @apply w-11 h-11 rounded-t-2xl transition-all duration-200 cursor-pointer relative;
-    background: linear-gradient(135deg, currentColor 0%, color-mix(in srgb, currentColor 85%, black) 100%);
+    background: linear-gradient(135deg, currentColor 0%, color-mix(in srgb, currentColor 90%, white) 100%);
     box-shadow: 
-      inset 0 -2px 3px rgba(0,0,0,0.25),
-      inset 0 1px 2px rgba(255,255,255,0.08),
-      0 3px 6px rgba(0,0,0,0.3);
-    border: 1.5px solid color-mix(in srgb, currentColor 75%, black);
+      inset 0 -2px 3px rgba(0,0,0,0.15),
+      inset 0 1px 2px rgba(255,255,255,0.4),
+      0 2px 6px rgba(0,0,0,0.15);
+    border: 1.5px solid color-mix(in srgb, currentColor 80%, white);
     transform-style: preserve-3d;
   }
   
   .seat:hover:not(.seat-reserved):not(.seat-sold) {
     @apply scale-105 -translate-y-0.5;
     box-shadow: 
-      inset 0 -2px 3px rgba(0,0,0,0.25),
-      inset 0 1px 2px rgba(255,255,255,0.12),
-      0 6px 12px rgba(0,0,0,0.4),
-      0 0 15px currentColor;
+      inset 0 -2px 3px rgba(0,0,0,0.15),
+      inset 0 1px 2px rgba(255,255,255,0.5),
+      0 4px 12px rgba(0,0,0,0.2),
+      0 0 12px currentColor;
   }
   
   /* Base del asiento - simula la parte inferior */
@@ -169,9 +168,9 @@ All colors MUST be HSL.
     left: 10%;
     right: 10%;
     height: 5px;
-    background: linear-gradient(to bottom, currentColor, color-mix(in srgb, currentColor 65%, black));
+    background: linear-gradient(to bottom, currentColor, color-mix(in srgb, currentColor 75%, black));
     border-radius: 0 0 3px 3px;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
   
   /* Número del asiento */
@@ -181,9 +180,9 @@ All colors MUST be HSL.
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 0.7rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
     z-index: 10;
     pointer-events: none;
   }
@@ -209,10 +208,10 @@ All colors MUST be HSL.
 
   @keyframes vip-glow {
     0%, 100% { 
-      filter: drop-shadow(0 0 6px hsl(var(--seat-vip) / 0.6));
+      filter: drop-shadow(0 0 4px hsl(var(--seat-vip) / 0.4));
     }
     50% { 
-      filter: drop-shadow(0 0 12px hsl(var(--seat-vip) / 0.8));
+      filter: drop-shadow(0 0 8px hsl(var(--seat-vip) / 0.6));
     }
   }
 
@@ -224,10 +223,10 @@ All colors MUST be HSL.
 
   @keyframes selected-pulse {
     0%, 100% { 
-      filter: drop-shadow(0 0 10px hsl(var(--seat-selected) / 0.7));
+      filter: drop-shadow(0 0 6px hsl(var(--seat-selected) / 0.5));
     }
     50% { 
-      filter: drop-shadow(0 0 16px hsl(var(--seat-selected) / 0.9));
+      filter: drop-shadow(0 0 10px hsl(var(--seat-selected) / 0.7));
     }
   }
 
