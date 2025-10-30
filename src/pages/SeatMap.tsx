@@ -167,9 +167,11 @@ const SeatMap = () => {
                           return (
                             <div
                               key={number}
-                              className={seatClass}
+                              className={`${seatClass} relative`}
                               onClick={() => toggleSeat(row, number)}
-                            />
+                            >
+                              <span className="seat-number">{number}</span>
+                            </div>
                           );
                           })}
                         </div>
@@ -179,13 +181,13 @@ const SeatMap = () => {
                 </CardContent>
               </Card>
 
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-card p-6 rounded-xl border border-border">
-                <div>
-                  <p className="text-sm text-muted-foreground">Asientos seleccionados</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 bg-card p-6 rounded-xl border border-border">
+                <div className="w-full lg:flex-1">
+                  <p className="text-sm text-muted-foreground mb-2">Asientos seleccionados</p>
+                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
                     {selectedSeats.length > 0 ? (
                       selectedSeats.map(seat => (
-                        <Badge key={seat} variant="secondary" className="text-lg px-3 py-1">
+                        <Badge key={seat} variant="secondary" className="text-lg px-3 py-1 whitespace-nowrap flex-shrink-0">
                           {seat}
                         </Badge>
                       ))
@@ -195,7 +197,7 @@ const SeatMap = () => {
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="text-right w-full lg:w-auto flex-shrink-0">
                   <p className="text-sm text-muted-foreground">Total</p>
                   <p className="text-3xl font-bold text-gradient-cinema">
                     ${(selectedSeats.length * (showtime.price || 0)).toFixed(2)}
@@ -203,7 +205,7 @@ const SeatMap = () => {
                   <Button
                     onClick={handleConfirm}
                     disabled={selectedSeats.length === 0}
-                    className="mt-2 btn-cinema"
+                    className="mt-2 btn-cinema w-full lg:w-auto"
                   >
                     Confirmar selección
                   </Button>
