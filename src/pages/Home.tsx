@@ -4,9 +4,8 @@ import { Movie } from "@/types";
 import { getMovies } from "@/utils/storage";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Star, Filter } from "lucide-react";
+import { Clock, Star, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 
 const Home = () => {
@@ -38,14 +37,31 @@ const Home = () => {
 
   const genres = [...new Set(movies.map(m => m.genre))];
 
+  const genreColors: Record<string, string> = {
+    "Acción": "hsl(var(--genre-action))",
+    "Terror": "hsl(var(--genre-horror))",
+    "Comedia": "hsl(var(--genre-comedy))",
+    "Drama": "hsl(var(--genre-drama))",
+    "Ciencia Ficción": "hsl(var(--genre-scifi))",
+    "Romance": "hsl(var(--genre-romance))",
+  };
+
+  const toggleGenre = (genre: string) => {
+    setSelectedGenre(selectedGenre === genre ? "all" : genre);
+  };
+
+  const toggleFormat = (format: string) => {
+    setSelectedFormat(selectedFormat === format ? "all" : format);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       
-      <main className="pt-24 pb-12 px-4">
+      <main className="pt-24 pb-12 px-4 animate-fade-in">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4 text-gradient-cinema">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4 text-gradient-cinema">
               Cartelera 2025
             </h1>
             <p className="text-xl text-muted-foreground">
@@ -53,55 +69,74 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Filtros */}
+          {/* Filtros con Chips */}
           <Card className="card-cinema mb-8">
             <CardContent className="p-6">
-              <div className="flex items-center gap-4 flex-wrap">
-                <div className="flex items-center gap-2">
-                  <Filter className="w-5 h-5 text-primary" />
-                  <span className="font-semibold">Filtros:</span>
-                </div>
-                
-                <div className="flex gap-4 flex-wrap flex-1">
-                  <div className="min-w-[200px]">
-                    <Select value={selectedGenre} onValueChange={setSelectedGenre}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Género" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Todos los géneros</SelectItem>
-                        {genres.map(genre => (
-                          <SelectItem key={genre} value={genre}>{genre}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+              <div className="space-y-4">
+                {/* Géneros */}
+                <div>
+                  <p className="font-semibold mb-3 text-sm uppercase tracking-wide text-muted-foreground">Géneros</p>
+                  <div className="flex flex-wrap gap-2">
+                    {genres.map(genre => {
+                      const isActive = selectedGenre === genre;
+                      const color = genreColors[genre] || "hsl(var(--primary))";
+                      return (
+                        <button
+                          key={genre}
+                          onClick={() => toggleGenre(genre)}
+                          className={`chip ${isActive ? 'chip-active' : ''}`}
+                          style={{
+                            backgroundColor: isActive ? color : 'transparent',
+                            color: isActive ? 'white' : color,
+                            borderColor: color,
+                          }}
+                        >
+                          {genre}
+                          {isActive && <X className="w-4 h-4 ml-1" />}
+                        </button>
+                      );
+                    })}
                   </div>
-
-                  <div className="min-w-[150px]">
-                    <Select value={selectedFormat} onValueChange={setSelectedFormat}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Formato" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Todos los formatos</SelectItem>
-                        <SelectItem value="2D">2D</SelectItem>
-                        <SelectItem value="3D">3D</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {(selectedGenre !== "all" || selectedFormat !== "all") && (
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setSelectedGenre("all");
-                        setSelectedFormat("all");
-                      }}
-                    >
-                      Limpiar filtros
-                    </Button>
-                  )}
                 </div>
+
+                {/* Formatos */}
+                <div>
+                  <p className="font-semibold mb-3 text-sm uppercase tracking-wide text-muted-foreground">Formato</p>
+                  <div className="flex flex-wrap gap-2">
+                    {['2D', '3D'].map(format => {
+                      const isActive = selectedFormat === format;
+                      return (
+                        <button
+                          key={format}
+                          onClick={() => toggleFormat(format)}
+                          className={`chip ${isActive ? 'chip-active' : ''}`}
+                          style={{
+                            backgroundColor: isActive ? 'hsl(var(--accent))' : 'transparent',
+                            color: isActive ? 'white' : 'hsl(var(--accent))',
+                            borderColor: 'hsl(var(--accent))',
+                          }}
+                        >
+                          {format}
+                          {isActive && <X className="w-4 h-4 ml-1" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Botón limpiar filtros */}
+                {(selectedGenre !== "all" || selectedFormat !== "all") && (
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setSelectedGenre("all");
+                      setSelectedFormat("all");
+                    }}
+                    className="mt-2"
+                  >
+                    Limpiar todos los filtros
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -116,40 +151,52 @@ const Home = () => {
             </Card>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredMovies.map((movie) => (
-                <Card key={movie.id} className="card-cinema overflow-hidden group">
+              {filteredMovies.map((movie, index) => (
+                <Card 
+                  key={movie.id} 
+                  className="card-cinema overflow-hidden group animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
                   <div className="relative overflow-hidden aspect-[2/3]">
                     <img
                       src={movie.image}
                       alt={movie.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                    {/* Gradiente mejorado */}
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)'
+                      }}
+                    />
                     <div className="absolute top-3 right-3 flex flex-col gap-2">
-                      <Badge className="bg-primary px-3 py-1 text-sm font-bold">
+                      <Badge className="bg-primary px-3 py-1.5 text-sm font-bold shadow-lg">
                         {movie.rating}
                       </Badge>
-                      <Badge className="bg-accent px-3 py-1 text-sm font-bold">
+                      <Badge className="bg-accent px-3 py-1.5 text-sm font-bold shadow-lg">
                         {movie.format}
                       </Badge>
+                    </div>
+                    
+                    {/* Título y info sobre la imagen */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                      <h3 className="font-bold text-lg mb-2 line-clamp-2">{movie.title}</h3>
+                      <div className="flex items-center gap-3 text-sm">
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          {movie.duration} min
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Star className="w-4 h-4 text-secondary fill-secondary" />
+                          {movie.genre}
+                        </span>
+                      </div>
                     </div>
                   </div>
                   
                   <CardContent className="p-4 space-y-3">
-                    <h3 className="font-bold text-lg line-clamp-1">{movie.title}</h3>
-                    
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {movie.duration} min
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Star className="w-4 h-4 text-secondary fill-secondary" />
-                        {movie.genre}
-                      </span>
-                    </div>
-
-                    <p className="text-sm text-muted-foreground line-clamp-2">
+                    <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.5rem]">
                       {movie.description}
                     </p>
 

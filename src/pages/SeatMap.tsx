@@ -92,63 +92,73 @@ const SeatMap = () => {
   const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <Navbar />
       
-      <main className="pt-24 pb-12 px-4">
+      <main className="pt-24 pb-32 px-4 animate-fade-in">
         <div className="container mx-auto max-w-6xl">
           {movie && showtime && room && (
             <>
               <div className="mb-8 text-center">
-                <h1 className="text-3xl font-bold mb-2 text-gradient-cinema">{movie.title}</h1>
-                <p className="text-muted-foreground">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">{movie.title}</h1>
+                <p className="text-slate-300 text-lg">
                   {room.name} - {showtime.date} {showtime.time} - ${showtime.price}
                 </p>
                 {vipOnly && (
-                  <Alert className="mt-4 max-w-2xl mx-auto border-accent bg-accent/10">
+                  <Alert className="mt-4 max-w-2xl mx-auto border-accent bg-accent/20 backdrop-blur-sm">
                     <AlertCircle className="h-4 w-4 text-accent" />
-                    <AlertDescription className="text-accent font-semibold">
-                      ⭐ FUNCIÓN VIP EXCLUSIVA - Solo puedes seleccionar asientos VIP (filas I y J - color morado)
+                    <AlertDescription className="text-white font-semibold">
+                      ⭐ FUNCIÓN VIP EXCLUSIVA - Solo puedes seleccionar asientos VIP (filas I y J - color dorado)
                     </AlertDescription>
                   </Alert>
                 )}
               </div>
 
-              <Card className="card-cinema mb-6">
-                <CardContent className="p-8">
-                  <div className="flex justify-center gap-6 mb-8">
-                    <div className="flex items-center gap-2">
-                      <div className="seat seat-available" />
-                      <span className="text-sm">Disponible</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="seat seat-selected" />
-                      <span className="text-sm">Seleccionado</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="seat seat-vip" />
-                      <span className="text-sm">VIP</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="seat seat-reserved" />
-                      <span className="text-sm">Reservado</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="seat seat-sold" />
-                      <span className="text-sm">Vendido</span>
+              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 mb-6">
+                <CardContent className="p-6 md:p-8">
+                  {/* Leyenda con chips scrollables */}
+                  <div className="mb-8 overflow-x-auto pb-2">
+                    <div className="flex justify-center gap-3 md:gap-4 min-w-max px-2">
+                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-available))' }}>
+                        <div className="seat seat-available w-8 h-8 mr-2" />
+                        <span className="text-xs md:text-sm whitespace-nowrap">Disponible</span>
+                      </div>
+                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-selected))' }}>
+                        <div className="seat seat-selected w-8 h-8 mr-2" />
+                        <span className="text-xs md:text-sm whitespace-nowrap">Seleccionado</span>
+                      </div>
+                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-vip))' }}>
+                        <div className="seat seat-vip w-8 h-8 mr-2" />
+                        <span className="text-xs md:text-sm whitespace-nowrap">VIP</span>
+                      </div>
+                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-reserved))' }}>
+                        <div className="seat seat-reserved w-8 h-8 mr-2" />
+                        <span className="text-xs md:text-sm whitespace-nowrap">Reservado</span>
+                      </div>
+                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-sold))' }}>
+                        <div className="seat seat-sold w-8 h-8 mr-2" />
+                        <span className="text-xs md:text-sm whitespace-nowrap">Vendido</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="mb-8">
-                    <div className="h-2 bg-primary/20 rounded-full mb-2" />
-                    <p className="text-center text-sm text-muted-foreground">PANTALLA</p>
+                  {/* Pantalla de cine con efecto glow */}
+                  <div className="mb-12 screen-glow">
+                    <div className="h-3 rounded-full mb-3" 
+                      style={{
+                        background: 'linear-gradient(90deg, transparent, hsl(230 100% 60%), hsl(270 70% 65%), transparent)',
+                        boxShadow: '0 0 40px hsl(230 100% 60% / 0.6), 0 4px 20px rgba(0,0,0,0.5)'
+                      }}
+                    />
+                    <p className="text-center text-sm font-semibold text-white uppercase tracking-widest">PANTALLA</p>
                   </div>
 
+                  {/* Mapa de asientos */}
                   <div className="overflow-x-auto">
-                    <div className="space-y-3 min-w-max px-4">
+                    <div className="space-y-4 min-w-max px-4">
                       {rows.map(row => (
-                        <div key={row} className="flex items-center justify-center gap-2">
-                          <span className="w-8 text-center font-bold text-lg text-gradient-cinema sticky left-0 bg-background/80 backdrop-blur-sm z-10 py-2">
+                        <div key={row} className="flex items-center justify-center gap-3">
+                          <span className="w-10 text-center font-bold text-xl text-white sticky left-0 bg-slate-800/90 backdrop-blur-sm z-10 py-2 px-2 rounded-lg">
                             {row}
                           </span>
                           {[...Array(16)].map((_, idx) => {
@@ -157,7 +167,7 @@ const SeatMap = () => {
                           const seatId = `${row}${number}`;
                           const isSelected = selectedSeats.includes(seatId);
                           
-                          let seatClass = "seat ";
+                          let seatClass = "seat animate-pop ";
                           if (isSelected) seatClass += "seat-selected";
                           else if (seat?.status === "vip") seatClass += "seat-vip";
                           else if (seat?.status === "reserved") seatClass += "seat-reserved";
@@ -169,6 +179,7 @@ const SeatMap = () => {
                               key={number}
                               className={`${seatClass} relative`}
                               onClick={() => toggleSeat(row, number)}
+                              style={{ animationDelay: `${((row.charCodeAt(0) - 65) * 16 + idx) * 0.01}s` }}
                             >
                               <span className="seat-number">{number}</span>
                             </div>
@@ -181,34 +192,44 @@ const SeatMap = () => {
                 </CardContent>
               </Card>
 
-              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 bg-card p-6 rounded-xl border border-border">
-                <div className="w-full lg:flex-1">
-                  <p className="text-sm text-muted-foreground mb-2">Asientos seleccionados</p>
-                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
-                    {selectedSeats.length > 0 ? (
-                      selectedSeats.map(seat => (
-                        <Badge key={seat} variant="secondary" className="text-lg px-3 py-1 whitespace-nowrap flex-shrink-0">
-                          {seat}
-                        </Badge>
-                      ))
-                    ) : (
-                      <span className="text-muted-foreground">Ninguno</span>
-                    )}
-                  </div>
-                </div>
+              {/* Resumen fijo en la parte inferior */}
+              <div className="fixed bottom-0 left-0 right-0 bg-slate-800/95 backdrop-blur-lg border-t border-slate-700 p-4 shadow-2xl z-50">
+                <div className="container mx-auto max-w-6xl">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="w-full md:flex-1">
+                      <p className="text-xs text-slate-400 mb-2 uppercase tracking-wide">Asientos seleccionados</p>
+                      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+                        {selectedSeats.length > 0 ? (
+                          selectedSeats.map(seat => (
+                            <Badge 
+                              key={seat} 
+                              className="text-base md:text-lg px-4 py-1.5 whitespace-nowrap flex-shrink-0 bg-primary text-white font-semibold"
+                            >
+                              🎟️ {seat}
+                            </Badge>
+                          ))
+                        ) : (
+                          <span className="text-slate-400 text-sm">Ningún asiento seleccionado</span>
+                        )}
+                      </div>
+                    </div>
 
-                <div className="text-right w-full lg:w-auto flex-shrink-0">
-                  <p className="text-sm text-muted-foreground">Total</p>
-                  <p className="text-3xl font-bold text-gradient-cinema">
-                    ${(selectedSeats.length * (showtime.price || 0)).toFixed(2)}
-                  </p>
-                  <Button
-                    onClick={handleConfirm}
-                    disabled={selectedSeats.length === 0}
-                    className="mt-2 btn-cinema w-full lg:w-auto"
-                  >
-                    Confirmar selección
-                  </Button>
+                    <div className="flex items-center gap-4 w-full md:w-auto">
+                      <div className="text-center md:text-right flex-1 md:flex-initial">
+                        <p className="text-xs text-slate-400 uppercase tracking-wide">Total</p>
+                        <p className="text-2xl md:text-4xl font-bold text-white">
+                          ${(selectedSeats.length * (showtime.price || 0)).toFixed(2)} <span className="text-lg text-slate-400">MXN</span>
+                        </p>
+                      </div>
+                      <Button
+                        onClick={handleConfirm}
+                        disabled={selectedSeats.length === 0}
+                        className="btn-cinema text-base md:text-lg px-6 md:px-8 py-4 md:py-6 h-auto"
+                      >
+                        Continuar →
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </>
