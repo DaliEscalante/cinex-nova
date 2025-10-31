@@ -46,7 +46,6 @@ export const initializeStorage = () => {
       { id: 1, name: "Sala 1", capacity: 160, type: "standard" },
       { id: 2, name: "Sala 2", capacity: 160, type: "standard" },
       { id: 3, name: "Sala VIP", capacity: 80, type: "vip" },
-      { id: 4, name: "Sala Premium", capacity: 120, type: "premium" },
     ];
     localStorage.setItem(STORAGE_KEYS.ROOMS, JSON.stringify(rooms));
   }
@@ -92,14 +91,12 @@ export const initializeStorage = () => {
       
       rows.forEach(row => {
         for (let num = 1; num <= 16; num++) {
-          let status: "available" | "reserved" | "sold" | "vip" | "premium" = "available";
+          let status: "available" | "reserved" | "sold" | "vip" = "available";
           
           // Randomly set some seats as reserved/sold (5%)
           const random = Math.random();
           if (random < 0.025) status = "reserved";
           else if (random < 0.05) status = "sold";
-          // Premium seats in rows G and H for premium rooms
-          else if (room?.type === "premium" && (row === 'G' || row === 'H')) status = "premium";
           // VIP seats in rows I and J for vip rooms
           else if (room?.type === "vip" && (row === 'I' || row === 'J')) status = "vip";
           

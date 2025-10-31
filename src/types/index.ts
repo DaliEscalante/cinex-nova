@@ -22,7 +22,7 @@ export interface Room {
   id: number;
   name: string;
   capacity: number;
-  type: "standard" | "vip" | "premium";
+  type: "standard" | "vip";
 }
 
 export interface Showtime {
@@ -49,7 +49,7 @@ export interface Product {
   categoryId: number;
 }
 
-export type SeatStatus = "available" | "reserved" | "sold" | "vip" | "premium";
+export type SeatStatus = "available" | "reserved" | "sold" | "vip";
 
 export interface Seat {
   row: string;

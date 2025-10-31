@@ -41,20 +41,13 @@ const SeatMap = () => {
     if (!seat || seat.status === "sold" || seat.status === "reserved") return;
 
     // Validación según tipo de sala
-    const allowedSeatType = room?.type === "standard" ? "available" : room?.type;
-    
     if (room?.type === "vip" && seat.status !== "vip") {
       toast.error("⭐ Esta es una función VIP exclusiva. Solo puedes seleccionar asientos VIP (filas I y J - color amarillo)");
       return;
     }
     
-    if (room?.type === "premium" && seat.status !== "premium") {
-      toast.error("✨ Esta es una función Premium exclusiva. Solo puedes seleccionar asientos Premium (filas G y H - color dorado)");
-      return;
-    }
-    
-    if (room?.type === "standard" && (seat.status === "vip" || seat.status === "premium")) {
-      toast.error("ℹ️ Esta es una función estándar. No puedes seleccionar asientos VIP o Premium para esta función.");
+    if (room?.type === "standard" && seat.status === "vip") {
+      toast.error("ℹ️ Esta es una función estándar. No puedes seleccionar asientos VIP para esta función.");
       return;
     }
 
@@ -101,7 +94,7 @@ const SeatMap = () => {
   const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-background">
       <Navbar />
       
       <main className="pt-24 pb-32 px-4 animate-fade-in">
@@ -109,8 +102,8 @@ const SeatMap = () => {
           {movie && showtime && room && (
             <>
               <div className="mb-8 text-center">
-                <h1 className="text-3xl md:text-4xl font-bold mb-2 text-white">{movie.title}</h1>
-                <p className="text-slate-300 text-lg">
+                <h1 className="text-3xl md:text-4xl font-bold mb-2 text-foreground">{movie.title}</h1>
+                <p className="text-muted-foreground text-lg">
                   {room.name} - {showtime.date} {showtime.time} - ${showtime.price}
                 </p>
                 {room?.type === "vip" && (
@@ -121,42 +114,30 @@ const SeatMap = () => {
                     </AlertDescription>
                   </Alert>
                 )}
-                {room?.type === "premium" && (
-                  <Alert className="mt-4 max-w-2xl mx-auto border-secondary bg-secondary/20 backdrop-blur-sm">
-                    <AlertCircle className="h-4 w-4 text-secondary" />
-                    <AlertDescription className="text-foreground font-semibold">
-                      ✨ FUNCIÓN PREMIUM EXCLUSIVA - Solo puedes seleccionar asientos Premium (filas G y H - color dorado)
-                    </AlertDescription>
-                  </Alert>
-                )}
               </div>
 
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 mb-6">
+              <Card className="bg-card/80 backdrop-blur-sm border-border mb-6">
                 <CardContent className="p-6 md:p-8">
                   {/* Leyenda con chips scrollables */}
                   <div className="mb-8 overflow-x-auto pb-2">
                     <div className="flex justify-center gap-3 md:gap-4 min-w-max px-2">
-                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-available))' }}>
+                      <div className="chip bg-transparent text-foreground border-border" style={{ borderColor: 'hsl(var(--seat-available))' }}>
                         <div className="seat seat-available w-8 h-8 mr-2" />
                         <span className="text-xs md:text-sm whitespace-nowrap">Disponible</span>
                       </div>
-                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-selected))' }}>
+                      <div className="chip bg-transparent text-foreground border-border" style={{ borderColor: 'hsl(var(--seat-selected))' }}>
                         <div className="seat seat-selected w-8 h-8 mr-2" />
                         <span className="text-xs md:text-sm whitespace-nowrap">Seleccionado</span>
                       </div>
-                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-vip))' }}>
+                      <div className="chip bg-transparent text-foreground border-border" style={{ borderColor: 'hsl(var(--seat-vip))' }}>
                         <div className="seat seat-vip w-8 h-8 mr-2" />
                         <span className="text-xs md:text-sm whitespace-nowrap">VIP</span>
                       </div>
-                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-premium))' }}>
-                        <div className="seat seat-premium w-8 h-8 mr-2" />
-                        <span className="text-xs md:text-sm whitespace-nowrap">Premium</span>
-                      </div>
-                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-reserved))' }}>
+                      <div className="chip bg-transparent text-foreground border-border" style={{ borderColor: 'hsl(var(--seat-reserved))' }}>
                         <div className="seat seat-reserved w-8 h-8 mr-2" />
                         <span className="text-xs md:text-sm whitespace-nowrap">Reservado</span>
                       </div>
-                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-sold))' }}>
+                      <div className="chip bg-transparent text-foreground border-border" style={{ borderColor: 'hsl(var(--seat-sold))' }}>
                         <div className="seat seat-sold w-8 h-8 mr-2" />
                         <span className="text-xs md:text-sm whitespace-nowrap">Vendido</span>
                       </div>
@@ -171,7 +152,7 @@ const SeatMap = () => {
                         boxShadow: '0 0 40px hsl(230 100% 60% / 0.6), 0 4px 20px rgba(0,0,0,0.5)'
                       }}
                     />
-                    <p className="text-center text-sm font-semibold text-white uppercase tracking-widest">PANTALLA</p>
+                    <p className="text-center text-sm font-semibold text-foreground uppercase tracking-widest">PANTALLA</p>
                   </div>
 
                   {/* Mapa de asientos */}
@@ -179,7 +160,7 @@ const SeatMap = () => {
                     <div className="space-y-4 min-w-max px-4">
                       {rows.map(row => (
                         <div key={row} className="flex items-center justify-center gap-3">
-                          <span className="w-10 text-center font-bold text-xl text-white sticky left-0 bg-slate-800/90 backdrop-blur-sm z-10 py-2 px-2 rounded-lg">
+                          <span className="w-10 text-center font-bold text-xl text-foreground sticky left-0 bg-card/90 backdrop-blur-sm z-10 py-2 px-2 rounded-lg">
                             {row}
                           </span>
                           {[...Array(16)].map((_, idx) => {
@@ -191,7 +172,6 @@ const SeatMap = () => {
                           let seatClass = "seat animate-pop ";
                           if (isSelected) seatClass += "seat-selected";
                           else if (seat?.status === "vip") seatClass += "seat-vip";
-                          else if (seat?.status === "premium") seatClass += "seat-premium";
                           else if (seat?.status === "reserved") seatClass += "seat-reserved";
                           else if (seat?.status === "sold") seatClass += "seat-sold";
                           else seatClass += "seat-available";
@@ -215,32 +195,32 @@ const SeatMap = () => {
               </Card>
 
               {/* Resumen fijo en la parte inferior */}
-              <div className="fixed bottom-0 left-0 right-0 bg-slate-800/95 backdrop-blur-lg border-t border-slate-700 p-4 shadow-2xl z-50">
+              <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border p-4 shadow-2xl z-50">
                 <div className="container mx-auto max-w-6xl">
                   <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="w-full md:flex-1">
-                      <p className="text-xs text-slate-400 mb-2 uppercase tracking-wide">Asientos seleccionados</p>
-                      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+                      <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wide">Asientos seleccionados</p>
+                    <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
                         {selectedSeats.length > 0 ? (
                           selectedSeats.map(seat => (
                             <Badge 
                               key={seat} 
-                              className="text-base md:text-lg px-4 py-1.5 whitespace-nowrap flex-shrink-0 bg-primary text-white font-semibold"
+                              className="text-base md:text-lg px-4 py-1.5 whitespace-nowrap flex-shrink-0 bg-primary text-primary-foreground font-semibold"
                             >
                               🎟️ {seat}
                             </Badge>
                           ))
                         ) : (
-                          <span className="text-slate-400 text-sm">Ningún asiento seleccionado</span>
+                          <span className="text-muted-foreground text-sm">Ningún asiento seleccionado</span>
                         )}
                       </div>
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto">
                       <div className="text-center md:text-right flex-1 md:flex-initial">
-                        <p className="text-xs text-slate-400 uppercase tracking-wide">Total</p>
-                        <p className="text-2xl md:text-4xl font-bold text-white">
-                          ${(selectedSeats.length * (showtime.price || 0)).toFixed(2)} <span className="text-lg text-slate-400">MXN</span>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wide">Total</p>
+                        <p className="text-2xl md:text-4xl font-bold text-foreground">
+                          ${(selectedSeats.length * (showtime.price || 0)).toFixed(2)} <span className="text-lg text-muted-foreground">MXN</span>
                         </p>
                       </div>
                       <Button
