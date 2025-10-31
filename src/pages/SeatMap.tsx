@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Showtime, Seat, Movie, Room } from "@/types";
 import { getShowtimes, getSeats, saveSeats, getMovies, getRooms, getCart, saveCart } from "@/utils/storage";
 import { Button } from "@/components/ui/button";
@@ -12,14 +12,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const SeatMap = () => {
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [showtime, setShowtime] = useState<Showtime | null>(null);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const [seats, setSeats] = useState<Seat[]>([]);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-  const vipOnly = searchParams.get("vipOnly") === "true";
 
   useEffect(() => {
     const showtimeId = parseInt(id || "0");
@@ -42,10 +40,21 @@ const SeatMap = () => {
     const seat = seats.find(s => s.row === row && s.number === number);
     if (!seat || seat.status === "sold" || seat.status === "reserved") return;
 
-    // Si la función NO es VIP only pero el asiento es VIP, permitir seleccionarlo
-    // Si la función ES VIP only, SOLO permitir asientos VIP
-    if (vipOnly && seat.status !== "vip") {
-      toast.error("⚠️ Esta es una función VIP exclusiva. Solo puedes seleccionar asientos VIP (filas I y J)");
+    // Validación según tipo de sala
+    const allowedSeatType = room?.type === "standard" ? "available" : room?.type;
+    
+    if (room?.type === "vip" && seat.status !== "vip") {
+      toast.error("⭐ Esta es una función VIP exclusiva. Solo puedes seleccionar asientos VIP (filas I y J - color amarillo)");
+      return;
+    }
+    
+    if (room?.type === "premium" && seat.status !== "premium") {
+      toast.error("✨ Esta es una función Premium exclusiva. Solo puedes seleccionar asientos Premium (filas G y H - color dorado)");
+      return;
+    }
+    
+    if (room?.type === "standard" && (seat.status === "vip" || seat.status === "premium")) {
+      toast.error("ℹ️ Esta es una función estándar. No puedes seleccionar asientos VIP o Premium para esta función.");
       return;
     }
 
@@ -104,11 +113,19 @@ const SeatMap = () => {
                 <p className="text-slate-300 text-lg">
                   {room.name} - {showtime.date} {showtime.time} - ${showtime.price}
                 </p>
-                {vipOnly && (
+                {room?.type === "vip" && (
                   <Alert className="mt-4 max-w-2xl mx-auto border-accent bg-accent/20 backdrop-blur-sm">
                     <AlertCircle className="h-4 w-4 text-accent" />
-                    <AlertDescription className="text-white font-semibold">
-                      ⭐ FUNCIÓN VIP EXCLUSIVA - Solo puedes seleccionar asientos VIP (filas I y J - color dorado)
+                    <AlertDescription className="text-foreground font-semibold">
+                      ⭐ FUNCIÓN VIP EXCLUSIVA - Solo puedes seleccionar asientos VIP (filas I y J - color amarillo)
+                    </AlertDescription>
+                  </Alert>
+                )}
+                {room?.type === "premium" && (
+                  <Alert className="mt-4 max-w-2xl mx-auto border-secondary bg-secondary/20 backdrop-blur-sm">
+                    <AlertCircle className="h-4 w-4 text-secondary" />
+                    <AlertDescription className="text-foreground font-semibold">
+                      ✨ FUNCIÓN PREMIUM EXCLUSIVA - Solo puedes seleccionar asientos Premium (filas G y H - color dorado)
                     </AlertDescription>
                   </Alert>
                 )}
@@ -130,6 +147,10 @@ const SeatMap = () => {
                       <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-vip))' }}>
                         <div className="seat seat-vip w-8 h-8 mr-2" />
                         <span className="text-xs md:text-sm whitespace-nowrap">VIP</span>
+                      </div>
+                      <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-premium))' }}>
+                        <div className="seat seat-premium w-8 h-8 mr-2" />
+                        <span className="text-xs md:text-sm whitespace-nowrap">Premium</span>
                       </div>
                       <div className="chip bg-transparent text-white border-slate-400" style={{ borderColor: 'hsl(var(--seat-reserved))' }}>
                         <div className="seat seat-reserved w-8 h-8 mr-2" />
@@ -170,6 +191,7 @@ const SeatMap = () => {
                           let seatClass = "seat animate-pop ";
                           if (isSelected) seatClass += "seat-selected";
                           else if (seat?.status === "vip") seatClass += "seat-vip";
+                          else if (seat?.status === "premium") seatClass += "seat-premium";
                           else if (seat?.status === "reserved") seatClass += "seat-reserved";
                           else if (seat?.status === "sold") seatClass += "seat-sold";
                           else seatClass += "seat-available";

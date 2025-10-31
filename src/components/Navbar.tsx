@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { Film, User, LogOut, ShoppingCart } from "lucide-react";
+import { Film, User, LogOut, ShoppingCart, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -38,9 +38,15 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-4">
           {user && user.role === "customer" && (
-            <Button variant="outline" size="icon" onClick={() => navigate("/customer/cart")}>
-              <ShoppingCart className="w-5 h-5" />
-            </Button>
+            <>
+              <Button variant="outline" size="icon" onClick={() => navigate("/customer/cart")}>
+                <ShoppingCart className="w-5 h-5" />
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => navigate("/customer/tickets")} className="hidden sm:flex gap-2">
+                <Receipt className="w-4 h-4" />
+                Mis Tickets
+              </Button>
+            </>
           )}
 
           {user ? (
@@ -60,6 +66,15 @@ const Navbar = () => {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                {user.role === "customer" && (
+                  <>
+                    <DropdownMenuItem onClick={() => navigate("/customer/tickets")}>
+                      <Receipt className="w-4 h-4 mr-2" />
+                      Mis Tickets
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
                 <DropdownMenuItem onClick={handleLogout}>
                   <LogOut className="w-4 h-4 mr-2" />
                   Cerrar sesión

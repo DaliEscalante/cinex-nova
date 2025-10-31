@@ -84,18 +84,24 @@ export const initializeStorage = () => {
     
     // Generate seats for each showtime
     const showtimes = JSON.parse(localStorage.getItem(STORAGE_KEYS.SHOWTIMES) || "[]");
+    const rooms = JSON.parse(localStorage.getItem(STORAGE_KEYS.ROOMS) || "[]");
+    
     showtimes.forEach((showtime: Showtime) => {
+      const room = rooms.find((r: Room) => r.id === showtime.roomId);
       seats[showtime.id] = [];
+      
       rows.forEach(row => {
         for (let num = 1; num <= 16; num++) {
-          let status: "available" | "reserved" | "sold" | "vip" = "available";
+          let status: "available" | "reserved" | "sold" | "vip" | "premium" = "available";
           
-          // Randomly set some seats as reserved/sold (10%)
+          // Randomly set some seats as reserved/sold (5%)
           const random = Math.random();
-          if (random < 0.05) status = "reserved";
-          else if (random < 0.1) status = "sold";
-          // VIP seats in rows I and J
-          else if (row === 'I' || row === 'J') status = "vip";
+          if (random < 0.025) status = "reserved";
+          else if (random < 0.05) status = "sold";
+          // Premium seats in rows G and H for premium rooms
+          else if (room?.type === "premium" && (row === 'G' || row === 'H')) status = "premium";
+          // VIP seats in rows I and J for vip rooms
+          else if (room?.type === "vip" && (row === 'I' || row === 'J')) status = "vip";
           
           seats[showtime.id].push({ row, number: num, status });
         }

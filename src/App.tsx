@@ -10,6 +10,7 @@ import Showtimes from "./pages/Showtimes";
 import SeatMap from "./pages/SeatMap";
 import Products from "./pages/Products";
 import Cart from "./pages/customer/Cart";
+import Tickets from "./pages/customer/Tickets";
 import Dashboard from "./pages/admin/Dashboard";
 import MoviesAdmin from "./pages/admin/Movies";
 import ProductsAdmin from "./pages/admin/Products";
@@ -50,6 +51,11 @@ const App = () => (
             <Route path="/customer/cart" element={
               <ProtectedRoute allowedRoles={["customer"]}>
                 <Cart />
+              </ProtectedRoute>
+            } />
+            <Route path="/customer/tickets" element={
+              <ProtectedRoute allowedRoles={["customer"]}>
+                <Tickets />
               </ProtectedRoute>
             } />
             

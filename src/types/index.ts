@@ -49,7 +49,7 @@ export interface Product {
   categoryId: number;
 }
 
-export type SeatStatus = "available" | "reserved" | "sold" | "vip";
+export type SeatStatus = "available" | "reserved" | "sold" | "vip" | "premium";
 
 export interface Seat {
   row: string;
